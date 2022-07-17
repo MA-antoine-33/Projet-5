@@ -14,6 +14,7 @@ fetch("http://localhost:3000/api/products")
 
 // On récupère l'ID via l'url
 const searchUrl = new URLSearchParams(document.location.search);
+console.log(document.location);
 const id = searchUrl.get("_id");
 
     // On vérifie dans la console qu'on a bien récupéré l'ID voulu
@@ -33,8 +34,9 @@ function productOfKanap(Kanap) {
     let colorChose = document.querySelector("#colors");
     let imageAlt = document.querySelector("article div.item__img");
 
-    //On créer nptre boucle pour personnalisé nos variables précédentes*
+    //On créer nptre boucle pour personnaliser nos variables précédentes*
     for (let kanapChose of Kanap) {
+        //Si l'id est identique à un id du tableau on aoute des éléments
         if (id === kanapChose._id) {
             title.textContent = `${kanapChose.name}`;
             price.textContent = `${kanapChose.price}`;
@@ -42,11 +44,11 @@ function productOfKanap(Kanap) {
             imageAlt.innerHTML = `<img src ="${kanapChose.imageUrl}" alt="${kanapChose.altTxt}">`;
 
             //On en profite pour déclarér le prix pour le futur panier
-            kanapClient.price = `${kanapChose.price}`
+            kanapClient.price = `${kanapChose.price}`;
 
             //On définit la couleur du canapé avec une boucle dans la boucle comme sur son tableau dans le tableau
             for (let color of kanapChose.colors) {
-                colorChose.innerHTML += `<option value ="${color}">${color}</option>`;
+                colorChose.innerHTML += `<option value="${color}">${color}</option>`;
             }
         }
     }
@@ -57,21 +59,26 @@ function productOfKanap(Kanap) {
 let picColor = document.querySelector("#colors");
 picColor.addEventListener("input", (eventColor) => {
     let kanapColor;
+    //On récupère la valeur grace à l'event et on le rajoute ensuite à l'objet kanapClient
         kanapColor = eventColor.target.value;
-    kanapClient.color = kanapColor;
-    document.querySelector("#addToCart").style.color = "white";
-    document.querySelector("#addToCart").textContent = "ajouter au panier";
+        kanapClient.color = kanapColor;
+        document.querySelector("#addToCart").style.color = "white";
+        document.querySelector("#addToCart").textContent = "Ajouter au panier";
+    console.log(kanapColor)
 });
+
 
 //Choix quantité
 
-let picQuantity = document.querySelector("input[id='quantity']");
+let picQuantity = document.querySelector('input[id="quantity"]');
 let kanapQuantity;
-    picQuantity.addEventListener("input", eventQuantity => {
+    picQuantity.addEventListener("input", (eventQuantity) => {
+        //On récupère la valeur grace à l'event et on le rajoute ensuite à l'objet kanapClient
         kanapQuantity = eventQuantity.target.value;
         kanapClient.quantity = kanapQuantity;
         document.querySelector("#addToCart").style.color = "white";
-        document.querySelector("#addToCart").textContent = "ajouter au panier";
+        document.querySelector("#addToCart").textContent = "Ajouter au panier";
+    console.log(kanapQuantity)
     });
 
 
@@ -89,8 +96,9 @@ picProduct.addEventListener("click", () => {
         alert("pour valider votre article, veuillez renseigner une couleur ainsi qu'une quantité valide comprise entre 1 et 100");
     } else {
         addToPanier();
+        console.log("Produit ajouté avec succés")
         document.querySelector("#addToCart").style.color = "green";
-        document.querySelector("#addToCart").textContent = "produit ajouté !";
+        document.querySelector("#addToCart").textContent = "Produit ajouté !";
     }
 });
 
@@ -108,6 +116,7 @@ let productToAdd = [];
 function addFirstProduct() {
     if (saveProduct === null) {
         picProductClient.push(kanapClient);
+        console.log(kanapClient)
         return (localStorage.stockPannier = JSON.stringify(picProductClient));
     }
 };
@@ -118,7 +127,7 @@ function otherProduct() {
     productToAdd = [];
     temporaryProduct.push(kanapClient);
     //On rassemble nos tableaux 2 et 3
-    productToAdd = [...saveProduct, ...temporaryProduct];
+    productToAdd = saveProduct.concat(temporaryProduct);
     // On trie et on classe les id
     productToAdd.sort(function triage(a, b) {
         if (a._id < b._id) return -1;
@@ -145,8 +154,8 @@ function addToPanier () {
             if (kanapChose._id === id && kanapChose.color === kanapClient.color) {
                 alert("Vous avez déjà selectionné ce canapé");
                 //On créer une variable pour additionner l'ancienne quantité et la nouvelle
-                let addQuantity = parseInt(kanapChose.quantity) + parseInt(picQuantity);
-                kanapChose.quantity = JSON.stringify(saveProduct);
+                let addQuantity = parseInt(kanapChose.quantity) + parseInt(kanapQuantity);
+                kanapChose.quantity = JSON.stringify(addQuantity);
                 // On renvoit le nouveau panier dans le local storage
                 return (localStorage.stockPannier = JSON.stringify(saveProduct));
             }
@@ -154,5 +163,4 @@ function addToPanier () {
         return otherProduct();
     }
     return addFirstProduct();
-};
-console.log(saveProduct)
+}
