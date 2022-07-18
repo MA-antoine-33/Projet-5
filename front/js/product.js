@@ -75,7 +75,8 @@ let kanapQuantity;
     picQuantity.addEventListener("input", (eventQuantity) => {
         //On récupère la valeur grace à l'event et on le rajoute ensuite à l'objet kanapClient
         kanapQuantity = eventQuantity.target.value;
-        kanapClient.quantity = kanapQuantity;
+        //On rajoute un parseInt pour supprimer le zéro de départ si le client se rate en tapant
+        kanapClient.quantity = parseInt(kanapQuantity, 10);
         document.querySelector("#addToCart").style.color = "white";
         document.querySelector("#addToCart").textContent = "Ajouter au panier";
     console.log(kanapQuantity)

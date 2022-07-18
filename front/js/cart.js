@@ -66,7 +66,7 @@ function display(indexer) {
                 <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                         <p>Qté : </p>
-                        <input type="number" class="itemQuantity" min="1" max="100" value="${kanapChose.quantity}">
+                        <input type="number" step="1" class="itemQuantity" min="1" max="100" value="${kanapChose.quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                         <p class="deleteItem" data-id="${kanapChose._id}" data-color="${kanapChose.color}">Supprimer</p>
@@ -91,7 +91,7 @@ function changeQuantity() {
             //On modifie la quantité du produit
             for (kanap of pannier)
                 if (kanap._id === kanapCart.dataset.id && kanapCart.dataset.color === kanap.color) {
-                    kanap.quantity = eventQuantity.target.value;
+                    kanap.quantity = Number(eventQuantity.target.value);
                     localStorage.stockPannier = JSON.stringify(pannier);
                     //On actuealise nos données
                     productTotal();
@@ -400,16 +400,3 @@ function sendCommand() {
         });
     };
 };
-
-//On finit en vidant le pannier et en mettant un message de numéro de commande quand cell-ci est validée
-function sendValidation() {
-    if (page.match("confirmation")) {
-        sessionStorage.clear();
-        
-        let numOfCommand = new URLSearchParams(document.location.search).get("cartOrder");
-        document.querySelector("#orderId").innerHTML = `<br>${numOfCommand}<br>Merci pour vos achats`;
-        console.log("Le numéro de commande est le : " + numOfCommand);
-        // On réinitialise le numéro de commande
-        numOfCommand = undefined
-    };
-}
