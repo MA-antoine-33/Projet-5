@@ -20,7 +20,7 @@ function sendValidation() {
     if (page.match("confirmation")) {
         sessionStorage.clear();
         localStorage.clear();
-        let numOfCommand = new URLSearchParams(document.location.search).get("cartOrder");
+        let numOfCommand = new URLSearchParams(document.location.search).get("commande");
         document.querySelector("#orderId").innerHTML = `<br>${numOfCommand}<br>Merci pour vos achats`;
         console.log("Le numéro de commande est le : " + numOfCommand);
         // On réinitialise le numéro de commande
