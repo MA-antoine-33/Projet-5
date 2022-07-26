@@ -10,10 +10,10 @@ if (page.match("cart")) {
       // appel de la fonction affichagePanier
       displayPannier(objectProducts);
   })
- /*.catch((err) => {
+ .catch((err) => {
     document.querySelector("#cartAndFormContainer").innerHTML = "<h1>erreur 404</h1>";
     console.log("erreur 404 au niveau de l'API, erreur suivante : " + err);
-  });*/
+  });
  } else  {
     console.log("Page confirmation");
  };
