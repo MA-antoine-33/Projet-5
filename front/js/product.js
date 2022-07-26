@@ -29,7 +29,7 @@ function productOfKanap(Kanap) {
     
     //On commence par définir ses champs
     let title = document.querySelector("#title");
-    let price = document.querySelector("#price");
+    //let price = document.querySelector("#price");
     let description = document.querySelector("#description");
     let colorChose = document.querySelector("#colors");
     let imageAlt = document.querySelector("article div.item__img");
@@ -44,7 +44,7 @@ function productOfKanap(Kanap) {
             imageAlt.innerHTML = `<img src ="${kanapChose.imageUrl}" alt="${kanapChose.altTxt}">`;
 
             //On en profite pour déclarér le prix pour le futur panier
-            kanapClient.price = `${kanapChose.price}`;
+            //kanapClient.price = `${kanapChose.price}`;
 
             //On définit la couleur du canapé avec une boucle dans la boucle comme sur son tableau dans le tableau
             for (let color of kanapChose.colors) {

@@ -10,10 +10,10 @@ if (page.match("cart")) {
       // appel de la fonction affichagePanier
       displayPannier(objectProducts);
   })
- .catch((err) => {
+ /*.catch((err) => {
     document.querySelector("#cartAndFormContainer").innerHTML = "<h1>erreur 404</h1>";
     console.log("erreur 404 au niveau de l'API, erreur suivante : " + err);
-  });
+  });*/
  } else  {
     console.log("Page confirmation");
  };
@@ -132,17 +132,17 @@ function deleteKanap() {
 function productTotal() {
     let pannier = JSON.parse(localStorage.getItem("stockPannier"));
     let kanapTotal = 0;
-    let priceKanap = 0;
-    let priceTotal = 0;
+    //let priceKanap = 0;
+    //let priceTotal = 0;
     //On récupère toutes nos quantités
         for (let kanap of pannier) {
             kanapTotal += JSON.parse(kanap.quantity);
-            priceKanap = JSON.parse(kanap.quantity) * JSON.parse(kanap.price);
-            priceTotal += priceKanap;
+            //priceKanap = JSON.parse(kanap.quantity) * JSON.parse(kanap.price);
+            //priceTotal += priceKanap;
         };
     //Je place le résultat à sa place
     document.getElementById("totalQuantity").textContent = kanapTotal;
-    document.getElementById("totalPrice").textContent = priceTotal;
+    //document.getElementById("totalPrice").textContent = priceTotal;
 };
 
 // Pour la partie correspondant au formulaire
